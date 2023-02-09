@@ -1,0 +1,31 @@
+lint:
+    rules:
+        all_default: true
+
+        remove:
+            - ENUM_FIELD_NAMES_PREFIX
+
+    rules_option:
+        # INDENT rule option.
+        indent:
+            # Available styles are 4(4-spaces), 2(2-spaces) or tab.
+            style: 4
+            # Available newlines are "\n", "\r", or "\r\n".
+            newline: "\n"
+            # Specifies if it should stop considering and inserting new lines at the appropriate positions
+            # when the inner elements are on the same line. Default is false.
+            not_insert_newline: true
+
+        field_names_exclude_prepositions:
+            # The specific prepositions to determine if the field name includes.
+            prepositions:
+                - for
+                - of
+            # The specific keywords including prepositions to ignore. E.g. end_of_support is a term you would like to use, and skip checking.
+            excludes:
+                - end_of_support
+
+        # MAX_LINE_LENGTH rule option.
+        max_line_length:
+            # Enforces a maximum line length
+            max_chars: 120

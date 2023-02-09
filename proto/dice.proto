@@ -1,0 +1,77 @@
+// Rolling Dice
+syntax = "proto3";
+package dice;
+
+// The Dice Service represents the actions that can be taken with Dice
+service DiceService {
+    // Roll describes the dice to roll and their result
+    rpc Roll (RollRequest) returns (RollResponse);
+}
+
+// RollRequest describes which Dice to roll
+message RollRequest {
+    // Definition of the Dice to roll
+    repeated Dice dice = 1;
+}
+
+// RollResponse describes the results of the Dice rolls
+message RollResponse {
+    // Results of the rolled Dice
+    repeated Dice dice = 1;
+}
+
+// Description of a Die
+message Dice {
+    // Number of Faces on a Die
+    enum Face {
+        // Unspecified number of faces
+        FACE_UNSPECIFIED = 0;
+        // d2
+        TWO = 2;
+        // d3
+        THREE = 3;
+        // d4
+        FOUR = 4;
+        // d5
+        FIVE = 5;
+        // d6
+        SIX = 6;
+        // d7
+        SEVEN = 7;
+        // d8
+        EIGHT = 8;
+        // d10
+        TEN = 10;
+        // d12
+        TWELVE = 12;
+        // d14
+        FOURTEEN = 14;
+        // d16
+        SIXTEEN = 16;
+        // d20
+        TWENTY = 20;
+        // d24
+        TWENTY_FOUR = 24;
+        // d30
+        THIRTY = 30;
+    }
+
+    // The number of faces present on the die
+    Face faces = 1;
+    // The number of Dice rolled (i.e. to drop or that exploded)
+    int32 count = 2;
+    // The result of the Die roll, only populated on a response
+    int32 result = 3;
+
+    oneof optional_explodes_on {
+        // The Face which causes the Die to explode
+        Face explodes_on = 10;
+    }
+
+    oneof optional_drop_n {
+        // Number of dice to drop, this only does something if count > 1, maxed at count - 1
+        int32 drop_highest = 11;
+        // Number of dice to drop, this only does something if count > 1, maxed at count - 1
+        int32 drop_lowest = 12;
+    }
+}
