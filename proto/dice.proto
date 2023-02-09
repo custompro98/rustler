@@ -63,12 +63,10 @@ message Dice {
     // The result of the Die roll, only populated on a response
     int32 result = 3;
 
-    oneof optional_explodes_on {
-        // The Face which causes the Die to explode
-        Face explodes_on = 10;
-    }
+    // The roll which causes the Die to explode
+    int32 explodes_on = 10;
 
-    oneof optional_drop_n {
+    oneof drop_n {
         // Number of dice to drop, this only does something if count > 1, maxed at count - 1
         int32 drop_highest = 11;
         // Number of dice to drop, this only does something if count > 1, maxed at count - 1

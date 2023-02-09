@@ -1,13 +1,15 @@
+use roller::roll;
 use tonic::{transport::Server, Request, Response, Status};
 
-use dice::{RollRequest, RollResponse};
-use dice::dice_service_server::{DiceService, DiceServiceServer};
+use grpc::{RollRequest, RollResponse};
+use grpc::dice_service_server::{DiceService, DiceServiceServer};
 
-pub mod dice {
+pub mod grpc {
     tonic::include_proto!("dice");
 }
 
 mod roller;
+mod generator;
 
 #[derive(Debug, Default)]
 pub struct MyDiceService {}
@@ -15,10 +17,8 @@ pub struct MyDiceService {}
 #[tonic::async_trait]
 impl DiceService for MyDiceService {
     async fn roll(&self, request: Request<RollRequest>) -> Result<Response<RollResponse>, Status> {
-        println!("Got a request: {:?}", request);
-
-        let reply = dice::RollResponse {
-            dice: request.into_inner().dice.into(),
+        let reply = grpc::RollResponse {
+            dice: request.get_ref().dice.iter().map(|die| roll(die.clone(), generator::rand).unwrap_or_default()).collect(),
         };
 
         return Ok(Response::new(reply));
