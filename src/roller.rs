@@ -23,15 +23,17 @@ pub fn roll(dice: Dice, gen: Generator) -> Result<Dice, Box<dyn error::Error>> {
     }
 
 
-    match dice.drop_n {
-        Some(dice::DropN::DropLowest(n)) => {
+    match dice.optional_drop_n {
+        Some(dice::OptionalDropN::DropLowest(n)) => {
             if n <= interim.len() as i32 {
+                println!("Dropping lowest {} from {:?}", n, interim);
                 interim.sort();
                 interim = interim[n as usize..interim.len()].to_vec();
             }
         },
-        Some(dice::DropN::DropHighest(n)) => {
+        Some(dice::OptionalDropN::DropHighest(n)) => {
             if n <= interim.len() as i32 {
+                println!("Dropping highest {} from {:?}", n, interim);
                 interim.sort();
                 interim = interim[0..interim.len() - n as usize].to_vec();
             }
@@ -43,7 +45,7 @@ pub fn roll(dice: Dice, gen: Generator) -> Result<Dice, Box<dyn error::Error>> {
         faces: dice.faces().into(),
         count: dice.count,
         result: interim.iter().sum(),
-        drop_n: dice.drop_n,
+        optional_drop_n: dice.optional_drop_n,
         explodes_ons: dice.explodes_ons,
     })
 }

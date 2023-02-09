@@ -66,7 +66,7 @@ message Dice {
     // The roll which causes the Die to explode
     repeated int32 explodes_ons = 10;
 
-    oneof drop_n {
+    oneof optional_drop_n {
         // Number of dice to drop, this only does something if count > 1, maxed at count - 1
         int32 drop_highest = 11;
         // Number of dice to drop, this only does something if count > 1, maxed at count - 1
