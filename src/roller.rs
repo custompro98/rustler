@@ -7,14 +7,14 @@ type Generator = fn(i32) -> i32;
 pub fn roll(dice: Dice, gen: Generator) -> Result<Dice, Box<dyn error::Error>> {
     let mut interim = Vec::<i32>::new();
 
-    for _ in 0..(dice.count) {
+    for _ in 0..dice.count {
         let mut res = 0;
 
         loop {
             let roll = gen(dice.faces);
             res += roll;
 
-            if roll != dice.explodes_on {
+            if !dice.explodes_ons.contains(&roll) {
                 break;
             }
         }
@@ -44,6 +44,6 @@ pub fn roll(dice: Dice, gen: Generator) -> Result<Dice, Box<dyn error::Error>> {
         count: dice.count,
         result: interim.iter().sum(),
         drop_n: dice.drop_n,
-        explodes_on: dice.explodes_on,
+        explodes_ons: dice.explodes_ons,
     })
 }

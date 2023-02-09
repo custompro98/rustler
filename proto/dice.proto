@@ -64,7 +64,7 @@ message Dice {
     int32 result = 3;
 
     // The roll which causes the Die to explode
-    int32 explodes_on = 10;
+    repeated int32 explodes_ons = 10;
 
     oneof drop_n {
         // Number of dice to drop, this only does something if count > 1, maxed at count - 1
