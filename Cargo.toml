@@ -7,9 +7,9 @@ edition = "2021"
 name = "dice-server"
 path = "src/server.rs"
 
-# [[bin]]
-# name = "dice-client"
-# path = "src/client.rs"
+[[bin]]
+name = "dice-client"
+path = "src/client.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
